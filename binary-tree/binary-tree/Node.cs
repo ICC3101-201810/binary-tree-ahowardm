@@ -22,9 +22,10 @@ namespace binary_tree{
       this.valor = valor;
       hijoIzquierdo = null;
       hijoDerecho = null;
+      padre = null;
     }
 
-    // Crea un nodo hijo del actual con valor
+    // Crea un nodo hijo del nodo especificado
     public Node(T valor, Node<T> padre)
     {
       this.valor = valor;
@@ -33,6 +34,8 @@ namespace binary_tree{
       this.padre = padre;
     }
 
+    // Recibe un valor, y si alguno de los nodos hijos esta libre crea un nuevo nodo hijo con el valor y 
+    // retorna true. Si ambos nodos estan ocupados retorna false
     public Boolean AgregaInfo(T valor){
       if (hijoIzquierdo == null)
       {
@@ -58,20 +61,42 @@ namespace binary_tree{
         return false;
     }
 
+    // Retorna el contenido del nodo actual.
+    // Para ver el contenido de los nodos relacionados podemos anidar llamadas a esta funcion, 
+    // o si necesitamos el de alguno de los hijos o padre (movernos solo un nivel) podemos usar
+    // los accesos directos definidos abajo
     public T VerContenido(){
       return valor;
     }
 
-    public T verContenidoIzquierdo(){
+    // Acceso directo a contenido hijo izquierdo
+    public T VerContenidoIzquierdo(){
       return hijoIzquierdo.VerContenido();
     }
 
-    public T verContenidoDerecho(){
+    // Acceso directo a contenido hijo derecho
+    public T VerContenidoDerecho(){
       return hijoDerecho.VerContenido();
     }
 
-    public T verContenidoPadre(){
+    // Acceso directo a contenido padre
+    public T VerContenidoPadre(){
       return padre.VerContenido();
+    }
+
+    // Recibe un valor y si el valor de alguno de los nodos hijos es igual, lo elimina (define como null) y retorna
+    // true. Si ninguno de los hijos tiene ese valor retorna false.
+    public Boolean EliminaNodo(T valor){
+      if (this.VerContenidoIzquierdo().Equals(valor))
+      {
+        hijoIzquierdo = null;
+        return true;
+      }
+      else if (this.VerContenidoDerecho().Equals(valor)){
+        hijoDerecho = null;
+        return true;
+      }
+      return false;
     }
   }
 }
